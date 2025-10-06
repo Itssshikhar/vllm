@@ -4,6 +4,204 @@
 
 import asyncio
 
+import inspect
+import logging
+
+# API Probing helpers - auto-generated for compatibility
+def safe_create_object(cls, **kwargs):
+    """Create object with only valid arguments based on signature."""
+    try:
+        if not callable(cls):
+            raise TypeError(f"{cls} is not callable")
+        sig = inspect.signature(cls)
+        valid_kwargs = {k: v for k, v in kwargs.items() 
+                       if k in sig.parameters and k != "self"}
+        return cls(**valid_kwargs)
+    except Exception as e:
+        logging.warning(f"Failed to create {cls.__name__ if hasattr(cls, '__name__') else cls} with args {list(kwargs.keys())}: {e}")
+        raise
+
+def safe_call_function(func, *args, **kwargs):
+    """Call function with only valid arguments based on signature."""
+    try:
+        if not callable(func):
+            raise TypeError(f"{func} is not callable")
+        sig = inspect.signature(func)
+        # Filter kwargs to only valid parameters
+        valid_kwargs = {k: v for k, v in kwargs.items() 
+                       if k in sig.parameters}
+        return func(*args, **valid_kwargs)
+    except Exception as e:
+        logging.warning(f"Failed to call {func.__name__ if hasattr(func, '__name__') else func} with args {list(kwargs.keys())}: {e}")
+        raise
+
+# Specific helpers for common vllm classes
+def safe_create_engine_output(**kwargs):
+    """Create EngineCoreOutput with compatible arguments."""
+    try:
+        from vllm.v1.engine import EngineCoreOutput
+        return safe_create_object(EngineCoreOutput, **kwargs)
+    except ImportError:
+        try:
+            from vllm.engine import EngineCoreOutput  
+            return safe_create_object(EngineCoreOutput, **kwargs)
+        except ImportError:
+            raise ImportError("EngineCoreOutput not found in vllm")
+
+def safe_create_sampling_params(**kwargs):
+    """Create SamplingParams with compatible arguments."""
+    try:
+        from vllm import SamplingParams
+        return safe_create_object(SamplingParams, **kwargs)
+    except ImportError:
+        try:
+            from vllm.sampling_params import SamplingParams
+            return safe_create_object(SamplingParams, **kwargs)
+        except ImportError:
+            raise ImportError("SamplingParams not found in vllm")
+
+def safe_create_llm(**kwargs):
+    """Create LLM with compatible arguments."""
+    try:
+        from vllm import LLM
+        return safe_create_object(LLM, **kwargs)
+    except ImportError:
+        raise ImportError("LLM not found in vllm")
+
+
+
+import inspect
+import logging
+
+# API Probing helpers - auto-generated for compatibility
+def safe_create_object(cls, **kwargs):
+    """Create object with only valid arguments based on signature."""
+    try:
+        if not callable(cls):
+            raise TypeError(f"{cls} is not callable")
+        sig = inspect.signature(cls)
+        valid_kwargs = {k: v for k, v in kwargs.items() 
+                       if k in sig.parameters and k != "self"}
+        return cls(**valid_kwargs)
+    except Exception as e:
+        logging.warning(f"Failed to create {cls.__name__ if hasattr(cls, '__name__') else cls} with args {list(kwargs.keys())}: {e}")
+        raise
+
+def safe_call_function(func, *args, **kwargs):
+    """Call function with only valid arguments based on signature."""
+    try:
+        if not callable(func):
+            raise TypeError(f"{func} is not callable")
+        sig = inspect.signature(func)
+        # Filter kwargs to only valid parameters
+        valid_kwargs = {k: v for k, v in kwargs.items() 
+                       if k in sig.parameters}
+        return func(*args, **valid_kwargs)
+    except Exception as e:
+        logging.warning(f"Failed to call {func.__name__ if hasattr(func, '__name__') else func} with args {list(kwargs.keys())}: {e}")
+        raise
+
+# Specific helpers for common vllm classes
+def safe_create_engine_output(**kwargs):
+    """Create EngineCoreOutput with compatible arguments."""
+    try:
+        from vllm.v1.engine import EngineCoreOutput
+        return safe_create_object(EngineCoreOutput, **kwargs)
+    except ImportError:
+        try:
+            from vllm.engine import EngineCoreOutput  
+            return safe_create_object(EngineCoreOutput, **kwargs)
+        except ImportError:
+            raise ImportError("EngineCoreOutput not found in vllm")
+
+def safe_create_sampling_params(**kwargs):
+    """Create SamplingParams with compatible arguments."""
+    try:
+        from vllm import SamplingParams
+        return safe_create_object(SamplingParams, **kwargs)
+    except ImportError:
+        try:
+            from vllm import SamplingParams
+            return safe_create_object(SamplingParams, **kwargs)
+        except ImportError:
+            raise ImportError("SamplingParams not found in vllm")
+
+def safe_create_llm(**kwargs):
+    """Create LLM with compatible arguments."""
+    try:
+        from vllm import LLM
+        return safe_create_object(LLM, **kwargs)
+    except ImportError:
+        raise ImportError("LLM not found in vllm")
+
+
+
+import inspect
+import logging
+
+# API Probing helpers - auto-generated for compatibility
+def safe_create_object(cls, **kwargs):
+    """Create object with only valid arguments based on signature."""
+    try:
+        if not callable(cls):
+            raise TypeError(f"{cls} is not callable")
+        sig = inspect.signature(cls)
+        valid_kwargs = {k: v for k, v in kwargs.items() 
+                       if k in sig.parameters and k != "self"}
+        return cls(**valid_kwargs)
+    except Exception as e:
+        logging.warning(f"Failed to create {cls.__name__ if hasattr(cls, '__name__') else cls} with args {list(kwargs.keys())}: {e}")
+        raise
+
+def safe_call_function(func, *args, **kwargs):
+    """Call function with only valid arguments based on signature."""
+    try:
+        if not callable(func):
+            raise TypeError(f"{func} is not callable")
+        sig = inspect.signature(func)
+        # Filter kwargs to only valid parameters
+        valid_kwargs = {k: v for k, v in kwargs.items() 
+                       if k in sig.parameters}
+        return func(*args, **valid_kwargs)
+    except Exception as e:
+        logging.warning(f"Failed to call {func.__name__ if hasattr(func, '__name__') else func} with args {list(kwargs.keys())}: {e}")
+        raise
+
+# Specific helpers for common vllm classes
+def safe_create_engine_output(**kwargs):
+    """Create EngineCoreOutput with compatible arguments."""
+    try:
+        from vllm.v1.engine import EngineCoreOutput
+        return safe_create_object(EngineCoreOutput, **kwargs)
+    except ImportError:
+        try:
+            from vllm.engine import EngineCoreOutput  
+            return safe_create_object(EngineCoreOutput, **kwargs)
+        except ImportError:
+            raise ImportError("EngineCoreOutput not found in vllm")
+
+def safe_create_sampling_params(**kwargs):
+    """Create SamplingParams with compatible arguments."""
+    try:
+        from vllm import SamplingParams
+        return safe_create_object(SamplingParams, **kwargs)
+    except ImportError:
+        try:
+            from vllm import SamplingParams
+            return safe_create_object(SamplingParams, **kwargs)
+        except ImportError:
+            raise ImportError("SamplingParams not found in vllm")
+
+def safe_create_llm(**kwargs):
+    """Create LLM with compatible arguments."""
+    try:
+        from vllm import LLM
+        return safe_create_object(LLM, **kwargs)
+    except ImportError:
+        raise ImportError("LLM not found in vllm")
+
+
+
 import pytest
 
 from tests.utils import wait_for_gpu_memory_to_clear
@@ -12,9 +210,9 @@ from tests.v1.shutdown.utils import (SHUTDOWN_TEST_THRESHOLD_BYTES,
 from vllm import LLM, AsyncEngineArgs, SamplingParams
 from vllm.distributed import get_tensor_model_parallel_rank
 from vllm.model_executor.models.llama import LlamaForCausalLM
-from vllm.utils import cuda_device_count_stateless
+from vllm.config.parallel import cuda_device_count_stateless
 from vllm.v1.engine.async_llm import AsyncLLM
-from vllm.v1.engine.exceptions import EngineDeadError
+from vllm.entrypoints.launcher import EngineDeadError
 
 MODELS = ["meta-llama/Llama-3.2-1B"]
 
